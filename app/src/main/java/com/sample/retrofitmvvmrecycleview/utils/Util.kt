@@ -10,7 +10,4 @@ open class Util {
             .build()
     }
 
-    companion object {
-        const val BASE_URL = "https://dev.codingambitions.com/android/ecommerce/api/v1/"
-    }
 }

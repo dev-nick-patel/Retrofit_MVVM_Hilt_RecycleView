@@ -1,6 +1,7 @@
 package com.sample.retrofitmvvmrecycleview.di
 
 import com.sample.retrofitmvvmrecycleview.retrofit.ApiService
+import com.sample.retrofitmvvmrecycleview.utils.Constants.BASE_URL
 import com.sample.retrofitmvvmrecycleview.utils.Util
 import dagger.Module
 import dagger.Provides
@@ -24,7 +25,7 @@ object AppModule : Util() {
     @Singleton
     fun provideRetrofitInstance() : Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Companion.BASE_URL)
+            .baseUrl(BASE_URL)
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
