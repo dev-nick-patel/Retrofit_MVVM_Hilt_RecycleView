@@ -7,16 +7,17 @@ import androidx.lifecycle.viewModelScope
 import com.sample.retrofitmvvmrecycleview.model.User
 import com.sample.retrofitmvvmrecycleview.repository.UserRepository
 import com.sample.retrofitmvvmrecycleview.retrofit.ApiClient
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserViewModel: ViewModel() {
+@HiltViewModel
+class UserViewModel @Inject constructor(
+    private val userRepository: UserRepository
+): ViewModel() {
 
     private var _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
-
-    val userRepository by lazy {
-        UserRepository(ApiClient.apiService)
-    }
 
     fun getUsers(){
         viewModelScope.launch {

@@ -6,8 +6,9 @@ import com.sample.retrofitmvvmrecycleview.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import javax.inject.Inject
 
-class UserRepository(private val apiService: ApiService) {
+class UserRepository @Inject constructor(private val apiService: ApiService) {
 
 //    val apiService by lazy {
 //        ApiClient.apiService
