@@ -1,25 +1,25 @@
 package com.sample.retrofitmvvmrecycleview.repository
 
-import com.sample.retrofitmvvmrecycleview.model.UserResponse
-import com.sample.retrofitmvvmrecycleview.retrofit.ApiClient
+import com.sample.retrofitmvvmrecycleview.model.User
 import com.sample.retrofitmvvmrecycleview.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val apiService: ApiService) {
 
-//    val apiService by lazy {
-//        ApiClient.apiService
-//    }
-
-   suspend fun getAllUsers(): Response<UserResponse> {
-      return  withContext(Dispatchers.IO){
+    suspend fun getAllUsers(): Result<List<User>>{
+        return  withContext(Dispatchers.IO){
+            val results: Result<List<User>>
             val response = apiService.getAllUsers()
-          response
+            response.apply {
+                results = if (isSuccessful) {
+                    Result.success(response.body()!!.users)
+                }else
+                    Result.failure(RuntimeException("Something went wrong"))
+            }
+            results
         }
     }
 
-//    suspend fun getAllUsers() = apiService.getAllUsers()
 }

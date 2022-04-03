@@ -1,14 +1,13 @@
 package com.sample.retrofitmvvmrecycleview.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sample.retrofitmvvmrecycleview.databinding.ActivityMainBinding
 import com.sample.retrofitmvvmrecycleview.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,8 +28,13 @@ class MainActivity : AppCompatActivity() {
             adapter = userAdapter
         }
         viewModel.getUsers()
-        viewModel.users.observe(this, Observer {
-            userAdapter.userList = it
-        })
+        viewModel.users.observe(this) { it ->
+            it.onSuccess {
+                userAdapter.userList = it
+            }
+            it.onFailure {
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
